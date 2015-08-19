@@ -18,10 +18,6 @@ var ENTER_KEY_CODE = 13;
 
 class MessageComposer extends React.Component {
 
-  static propTypes = {
-    threadID: React.PropTypes.string.isRequired
-  }
-
   state = {text: ''};
 
   render() {
@@ -45,9 +41,9 @@ class MessageComposer extends React.Component {
       event.preventDefault();
       var text = this.state.text.trim();
       if (text) {
+        console.log('MessageComposer thread', this.props);
         Relay.Store.update(new AddMessageMutation({
           text,
-          currentID: this.props.threadID,
           viewer: this.props.viewer,
           thread: this.props.thread
         }));
@@ -62,11 +58,13 @@ export default Relay.createContainer(MessageComposer, {
   fragments: {
     thread: () => Relay.QL`
       fragment on Thread {
+        id
         ${AddMessageMutation.getFragment('thread')}
       }
     `,
     viewer: () => Relay.QL`
       fragment on User {
+        id
         ${AddMessageMutation.getFragment('viewer')}
       }
     `,

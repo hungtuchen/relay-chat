@@ -4,6 +4,7 @@ export default class AddMessageMutation extends Relay.Mutation {
   static fragments = {
     thread: () => Relay.QL`
       fragment on Thread {
+        id,
         isRead,
         lastUpdated
       }
@@ -51,6 +52,7 @@ export default class AddMessageMutation extends Relay.Mutation {
   getVariables() {
     return {
       text: this.props.text,
+      id: this.props.thread.id
     };
   }
   getOptimisticResponse() {

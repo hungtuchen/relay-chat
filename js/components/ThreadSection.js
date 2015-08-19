@@ -17,12 +17,16 @@ import ThreadListItem from '../components/ThreadListItem';
 class ThreadSection extends React.Component {
 
   render() {
+    // hacky here!
+    let currentThreadID = this.props.relay.route.params.id;
+
     var threadListItems = this.props.threads.edges.map(edge => {
       return (
         <ThreadListItem
           key={edge.node.id}
           thread={edge.node}
           viewer={this.props.viewer}
+          currentThreadID={currentThreadID}
         />
       );
     });

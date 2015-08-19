@@ -19,9 +19,7 @@ class MessageSection extends React.Component {
 
   render() {
     const {thread, viewer} = this.props;
-    console.log('MessageSection thread', thread);
     var messageListItems = thread.messages.edges.map(edge => {
-      console.log(edge.node);
       return (
         <MessageListItem
           key={edge.node.id}
@@ -35,7 +33,7 @@ class MessageSection extends React.Component {
         <ul className="message-list" ref="messageList">
           {messageListItems}
         </ul>
-        <MessageComposer thread={thread} viewer={viewer} threadID={thread.id}/>
+        <MessageComposer thread={thread} viewer={viewer}/>
       </div>
     );
   }
@@ -55,7 +53,6 @@ export default Relay.createContainer(MessageSection, {
   fragments: {
     thread: () => Relay.QL`
       fragment on Thread {
-        id,
         name
         messages(first: 9007199254740991) {
           edges {
