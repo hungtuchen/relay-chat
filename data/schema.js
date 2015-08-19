@@ -46,14 +46,11 @@ var {nodeInterface, nodeField} = nodeDefinitions(
     return null;
   },
   (obj) => {
-    console.log('type resolving');
-    if (obj.id.indexOf('t_') === 0) {
-      return GraphQLThread;
-    }
-    if (obj.id.indexOf('m_') === 0) {
+    if (obj instanceof Message) {
       return GraphQLMessage;
-    }
-    if (obj.id === 'me') {
+    } else if (obj instanceof Thread) {
+      return GraphQLThread;
+    } else if (obj instanceof User) {
       return GraphQLUser;
     }
     return null;
