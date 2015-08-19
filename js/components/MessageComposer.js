@@ -41,7 +41,6 @@ class MessageComposer extends React.Component {
       event.preventDefault();
       var text = this.state.text.trim();
       if (text) {
-        console.log('MessageComposer thread', this.props);
         Relay.Store.update(new AddMessageMutation({
           text,
           viewer: this.props.viewer,

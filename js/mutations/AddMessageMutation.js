@@ -56,6 +56,7 @@ export default class AddMessageMutation extends Relay.Mutation {
     };
   }
   getOptimisticResponse() {
+    console.log('AddMessageMutation getOptimisticResponse', this.props);
     let timestamp = Date.now();
     return {
       messageEdge: {
