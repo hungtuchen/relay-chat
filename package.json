@@ -39,7 +39,7 @@
     "graphql-relay": "^0.3.0",
     "react": "^0.14.0-beta3",
     "react-dom": "^0.14.0-beta3",
-    "react-relay": "^0.1.0",
+    "react-relay": "^0.1.1",
     "react-router": "1.0.0-beta3",
     "relay-nested-routes": "^0.3.1",
     "webpack": "^1.10.5",

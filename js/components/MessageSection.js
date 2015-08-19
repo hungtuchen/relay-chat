@@ -44,7 +44,7 @@ class MessageSection extends React.Component {
   }
 
   _scrollToBottom() {
-    var ul = ReactDOM.findDomNode(this.refs.messageList);
+    var ul = ReactDOM.findDOMNode(this.refs.messageList);
     ul.scrollTop = ul.scrollHeight;
   }
 
