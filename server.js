@@ -1,9 +1,9 @@
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
-import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import {Schema} from './data/schema';
+import config from './webpack.config';
 
 const APP_PORT = 3000;
 const GRAPHQL_PORT = 8080;
@@ -16,39 +16,16 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 ));
 
 // Serve the Relay app
-var compiler = webpack({
-  entry: path.resolve(__dirname, 'js', 'app.js'),
-  eslint: {
-    configFile: '.eslintrc'
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        query: {
-          stage: 0,
-          plugins: ['./build/babelRelayPlugin']
-        }
-      },
-      {
-        test: /\.js$/,
-        loader: 'eslint'
-      }
-    ]
-  },
-  output: {filename: 'app.js', path: '/'}
-});
-var app = new WebpackDevServer(compiler, {
+var app = new WebpackDevServer(webpack(config), {
+  publicPath: config.output.publicPath,
   contentBase: '/public/',
   proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-  publicPath: '/js/',
+  hot: true,
+  historyApiFallback: true,
   stats: {colors: true}
 });
 // Serve static resources
 app.use('/', express.static('public'));
-app.use('/node_modules/react', express.static('node_modules/react'));
-app.use('/node_modules/react-relay', express.static('node_modules/react-relay'));
 app.listen(APP_PORT, () => {
   console.log(`App is now running on http://localhost:${APP_PORT}`);
 });

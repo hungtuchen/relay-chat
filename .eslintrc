@@ -11,8 +11,6 @@ env:
 globals:
   document: false
   window: false
-  React: false
-  Relay: false
 
 arrowFunctions: true
 blockBindings: true

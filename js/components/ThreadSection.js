@@ -11,6 +11,7 @@
  */
 
 import React from 'react';
+import Relay from 'react-relay';
 import ThreadListItem from '../components/ThreadListItem';
 
 class ThreadSection extends React.Component {
@@ -24,7 +25,7 @@ class ThreadSection extends React.Component {
           viewer={this.props.viewer}
         />
       );
-    }, this);
+    });
     var unread = this.props.threads.unreadCount === 0 ?
       null :
       <span>Unread threads: {this.props.threads.unreadCount}</span>;

@@ -11,6 +11,7 @@
  */
 
 import React from 'react';
+import Relay from 'react-relay';
 // import classNames from 'classnames';
 import MarkThreadAsReadMutation from '../mutations/MarkThreadAsReadMutation';
 

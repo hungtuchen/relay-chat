@@ -1,3 +1,5 @@
+import Relay from 'react-relay';
+
 export default class MarkThreadAsReadMutation extends Relay.Mutation {
   static fragments = {
     thread: () => Relay.QL`

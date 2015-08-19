@@ -11,6 +11,7 @@
  */
 
 import React from 'react';
+import Relay from 'react-relay';
 import AddMessageMutation from '../mutations/AddMessageMutation';
 
 var ENTER_KEY_CODE = 13;
@@ -44,7 +45,12 @@ class MessageComposer extends React.Component {
       event.preventDefault();
       var text = this.state.text.trim();
       if (text) {
-        Relay.store.update(new AddMessageMutation(text, this.props.threadID));
+        Relay.Store.update(new AddMessageMutation({
+          text,
+          currentID: this.props.threadID,
+          viewer: this.props.viewer,
+          thread: this.props.thread
+        }));
       }
       this.setState({text: ''});
     }
