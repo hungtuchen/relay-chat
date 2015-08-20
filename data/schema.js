@@ -20,9 +20,12 @@ import {
 } from 'graphql-relay';
 
 import {
-  Message,
   User,
   Thread,
+  Message,
+} from './data.js';
+
+import {
   addMessage,
   getMessage,
   getMessagesByThreadId,
