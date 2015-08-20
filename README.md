@@ -38,4 +38,4 @@ If you don't know much about GraphQL and Relay, I suggest you:
 3. [Last, learn Relay](http://facebook.github.io/relay/docs/guides-containers.html#content)
 (and the series below)
 
-Trust me, I tried these 3 steps in reverse, and I went step by step again.
+I tried these 3 steps in reverse, and I went step by step again.
