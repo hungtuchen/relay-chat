@@ -53,7 +53,6 @@ export default class AddMessageMutation extends Relay.Mutation {
       // 用 FIELDS_CHANGE 來讓新增訊息時，左邊thread的順序和unreadCount都會跟著動
       type: 'FIELDS_CHANGE',
       fieldIDs: {
-        thread: this.props.thread.id,
         viewer: this.props.viewer.id,
       },
     },
@@ -94,7 +93,6 @@ export default class AddMessageMutation extends Relay.Mutation {
     return {
       messageEdge: {
         node: {
-          id: 'm_' + timestamp,
           authorName: 'me', // hard coded for the example
           timestamp: timestamp,
           text: this.props.text,
