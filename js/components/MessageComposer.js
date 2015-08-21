@@ -43,6 +43,7 @@ class MessageComposer extends React.Component {
       if (text) {
         Relay.Store.update(new AddMessageMutation({
           text,
+          number: this.props.messagesNumber,
           viewer: this.props.viewer,
           thread: this.props.thread
         }));

@@ -19,8 +19,8 @@ import MessageListItem from './MessageListItem';
 class MessageSection extends React.Component {
 
   render() {
-    const {thread, viewer} = this.props;
-    var messageListItems = thread.messages.edges.map(edge => {
+    const {thread, thread: {messages: {edges, pageInfo}}, viewer} = this.props;
+    const messageListItems = edges.map(edge => {
       return (
         <MessageListItem
           key={edge.node.id}
@@ -28,13 +28,21 @@ class MessageSection extends React.Component {
         />
       );
     });
+    console.log('hasPreviousPage', pageInfo.hasPreviousPage);
     return (
       <div className="message-section">
         <h3 className="message-thread-heading">{thread.name}</h3>
         <ul className="message-list" ref="messageList">
+          { pageInfo.hasPreviousPage ?
+            <div onClick={this._handleLoadMoreOnClick}>
+              Load more
+            </div> :
+            null
+          }
           {messageListItems}
         </ul>
-        <MessageComposer thread={thread} viewer={viewer}/>
+        <MessageComposer messagesNumber={this.props.relay.variables.number}
+          thread={thread} viewer={viewer}/>
       </div>
     );
   }
@@ -48,19 +56,36 @@ class MessageSection extends React.Component {
     ul.scrollTop = ul.scrollHeight;
   }
 
+  _handleLoadMoreOnClick = () => {
+    this.props.relay.setVariables({
+      number: this.props.relay.variables.number + 1,
+    });
+  }
+
 }
 
 export default Relay.createContainer(MessageSection, {
+  // Specify the initial value of the `$cursorString` variable which is null
+  // As there is no 'before' needed for first loading
+  // 這裡我們 specify 'before' 後面所需要的 cursorString 以便作 pagination
+  // 一開始沒有東西 before, 所以就設定 initial 為 null
+  initialVariables: {
+    number: 1,
+    // cursorString: null
+  },
   fragments: {
     thread: () => Relay.QL`
       fragment on Thread {
         name
-        messages(first: 9007199254740991) {
+        messages(last: $number) {
           edges {
             node {
-              id,
+              id
               ${MessageListItem.getFragment('message')}
             }
+          }
+          pageInfo {
+            hasPreviousPage
           }
         }
         ${MessageComposer.getFragment('thread')}
