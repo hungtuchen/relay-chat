@@ -18,7 +18,10 @@ var ENTER_KEY_CODE = 13;
 
 class MessageComposer extends React.Component {
 
-  state = {text: ''};
+  constructor(props, context) {
+    super(props, context);
+    this.state = {text: ''};
+  }
 
   render() {
     return (
@@ -57,13 +60,11 @@ export default Relay.createContainer(MessageComposer, {
   fragments: {
     thread: () => Relay.QL`
       fragment on Thread {
-        id
         ${AddMessageMutation.getFragment('thread')}
       }
     `,
     viewer: () => Relay.QL`
       fragment on User {
-        id
         ${AddMessageMutation.getFragment('viewer')}
       }
     `,

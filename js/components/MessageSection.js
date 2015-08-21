@@ -49,7 +49,9 @@ class MessageSection extends React.Component {
   }
 
 }
-
+// if you wanna see how to do pagination in MessageSection,
+// you can checkout add-pagination branch
+// 如果你想看怎麼做 pagination, 可以 checkout add-pagination 這個分支
 export default Relay.createContainer(MessageSection, {
   fragments: {
     thread: () => Relay.QL`
