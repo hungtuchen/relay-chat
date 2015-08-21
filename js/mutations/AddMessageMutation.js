@@ -1,6 +1,8 @@
 import Relay from 'react-relay';
-
+// if you wanna see step by step explanation for Mutation,
+// you can check MarkThreadAsReadMutation.js first
 export default class AddMessageMutation extends Relay.Mutation {
+
   static fragments = {
     thread: () => Relay.QL`
       fragment on Thread {
@@ -23,6 +25,7 @@ export default class AddMessageMutation extends Relay.Mutation {
       }
     `,
   };
+
   getMutation() {
     return Relay.QL`mutation{addMessage}`;
   }
@@ -47,6 +50,7 @@ export default class AddMessageMutation extends Relay.Mutation {
       }
     `;
   }
+
   getConfigs() {
     return [{
       // use FIELDS_CHANGE here to make unreadCount and thread order changeed
@@ -56,6 +60,9 @@ export default class AddMessageMutation extends Relay.Mutation {
         viewer: this.props.viewer.id,
       },
     },
+    // use RANGE_ADD to let Relay append new egde in connection
+    // rangeBehaviors: append, prepend, remove
+    // 這裡 RANGE_ADD 告訴 Relay 要在 connection append 新的egde
     {
       type: 'RANGE_ADD',
       parentName: 'thread',
@@ -67,14 +74,15 @@ export default class AddMessageMutation extends Relay.Mutation {
       },
     }];
   }
+
   getVariables() {
     return {
       text: this.props.text,
       id: this.props.thread.id
     };
   }
+
   getOptimisticResponse() {
-    console.log(this.props);
     let viewerPayload;
     const {id, threads} = this.props.viewer;
     const {unreadCount} = threads;
@@ -93,6 +101,10 @@ export default class AddMessageMutation extends Relay.Mutation {
     return {
       messageEdge: {
         node: {
+          // id field is not recommended for new nodes in optimistic payload,
+          // since there might a chance that it could collide with another
+          // node from the server.
+          // 如果我們自己 specify id 有可能會跟 server 的 id 衝突，讓 Relay 幫我們處理
           authorName: 'me', // hard coded for the example
           timestamp: timestamp,
           text: this.props.text,
