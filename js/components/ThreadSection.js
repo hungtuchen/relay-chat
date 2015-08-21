@@ -17,22 +17,25 @@ import ThreadListItem from '../components/ThreadListItem';
 class ThreadSection extends React.Component {
 
   render() {
-    // hacky here!
-    let currentThreadID = this.props.relay.route.params.id;
-
-    var threadListItems = this.props.threads.edges.map(edge => {
+    // FIXME : hacky here! Because we can't get this.props.params.id here
+    // since it's the not component router matches
+    // 因為 ThreadSection 不是 router 碰到的 component, 所以我們只有用這個方法
+    // 之後 Relay 會有 global cached 的 implementation, 就不用這樣做了
+    const {relay, threads: {edges, unreadCount}, viewer} = this.props;
+    const currentThreadID = relay.route.params.id;
+    const threadListItems = edges.map(edge => {
       return (
         <ThreadListItem
           key={edge.node.id}
           thread={edge.node}
-          viewer={this.props.viewer}
+          viewer={viewer}
           currentThreadID={currentThreadID}
         />
       );
     });
-    var unread = this.props.threads.unreadCount === 0 ?
+    const unread = unreadCount === 0 ?
       null :
-      <span>Unread threads: {this.props.threads.unreadCount}</span>;
+      <span>Unread threads: {unreadCount}</span>;
     return (
       <div className="thread-section">
         <div className="thread-count">
@@ -46,7 +49,10 @@ class ThreadSection extends React.Component {
   }
 
 }
-
+// we would not use viewer in ThreadSection but ThreadListItem needs it to
+// trigger MarkThreadAsReadMutation, so we need to specify here
+// 這裡雖然不會用到 viewer 但因為更下層的 ThreadListItem 的 MarkThreadAsReadMutation
+// 會用到所以也要 specify ，這是 Relay 比較麻煩的地方
 export default Relay.createContainer(ThreadSection, {
   fragments: {
     threads: () => Relay.QL`
