@@ -28,7 +28,7 @@ class MessageSection extends React.Component {
         />
       );
     });
-    console.log('hasPreviousPage', pageInfo.hasPreviousPage);
+
     return (
       <div className="message-section">
         <h3 className="message-thread-heading">{thread.name}</h3>
@@ -41,8 +41,9 @@ class MessageSection extends React.Component {
           }
           {messageListItems}
         </ul>
-        <MessageComposer messagesNumber={this.props.relay.variables.number}
-          thread={thread} viewer={viewer}/>
+        <MessageComposer thread={thread} viewer={viewer}
+          onMessageCreated={::this._handleMessageCreated}
+          onMessageCreatedFailed={::this._handleMessageCreatedFailed}/>
       </div>
     );
   }
@@ -59,6 +60,18 @@ class MessageSection extends React.Component {
   _handleLoadMoreOnClick = () => {
     this.props.relay.setVariables({
       number: this.props.relay.variables.number + 1,
+    });
+  }
+
+  _handleMessageCreated() {
+    this.props.relay.setVariables({
+      number: this.props.relay.variables.number + 1,
+    });
+  }
+
+  _handleMessageCreatedFailed() {
+    this.props.relay.setVariables({
+      number: this.props.relay.variables.number - 1,
     });
   }
 
