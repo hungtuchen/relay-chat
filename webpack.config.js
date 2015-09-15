@@ -1,12 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var resolveFromHere = path.resolve.bind(path, __dirname);
+var resolveModuleDir = resolveFromHere.bind(path, 'node_modules');
+
 module.exports = {
   devtool: '#source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    path.resolve(__dirname, 'js', 'app.js'),
+    resolveFromHere('js', 'app.js'),
   ],
   output: {
     path: '/',
@@ -17,6 +20,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  resolve: {
+    alias: {
+      'react': resolveModuleDir('react')
+    }
+  },
   module: {
     loaders: [
       {
