@@ -12,13 +12,14 @@
 
 import React from 'react';
 import Relay from 'react-relay';
+import { PropTypes } from 'react-router';
 import ThreadSection from './ThreadSection';
 import MessageSection from './MessageSection';
 
 class ChatApp extends React.Component {
 
   static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+    history: PropTypes.history,
   }
 
   componentWillMount() {
@@ -28,7 +29,7 @@ class ChatApp extends React.Component {
     // TODO: better if we can do it in route config
     const currentThreadID = this.props.viewer.threads.edges[0].node.id;
     if (window.location.pathname === '/' ) {
-      this.context.router.transitionTo(`/thread/${currentThreadID}`);
+      this.context.history.pushState(null, `/thread/${currentThreadID}`);
     }
   }
 

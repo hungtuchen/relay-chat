@@ -12,13 +12,14 @@
 
 import React from 'react';
 import Relay from 'react-relay';
+import { PropTypes } from 'react-router';
 import classNames from 'classnames';
 import MarkThreadAsReadMutation from '../mutations/MarkThreadAsReadMutation';
 
 class ThreadListItem extends React.Component {
 
   static contextTypes = {
-    router: React.PropTypes.object.isRequired,
+    history: PropTypes.history,
   }
 
   render() {
@@ -43,7 +44,7 @@ class ThreadListItem extends React.Component {
   }
 
   _onClick = () => {
-    this.context.router.transitionTo(`/thread/${this.props.thread.id}`);
+    this.context.history.pushState(null, `/thread/${this.props.thread.id}`);
     // viewer, thread, isRead here would be props in MarkThreadAsReadMutation
     // 這裡的 viewer, thread, isRead 會變成 MarkThreadAsReadMutation
     // 的 props
