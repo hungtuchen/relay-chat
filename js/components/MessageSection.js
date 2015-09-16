@@ -11,7 +11,6 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
@@ -53,7 +52,7 @@ class MessageSection extends React.Component {
   }
 
   _scrollToBottom() {
-    var ul = ReactDOM.findDOMNode(this.refs.messageList);
+    var ul = this.refs.messageList;
     ul.scrollTop = ul.scrollHeight;
   }
 

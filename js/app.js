@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router';
-import BrowserHistory from 'react-router/lib/BrowserHistory';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import Routes from './routes';
 import ReactRouterRelay from 'react-router-relay';
 
 ReactDOM.render(
   <Router
-    history={new BrowserHistory()}
+    history={createBrowserHistory()}
     createElement={ReactRouterRelay.createElement}
   >
     {Routes}
