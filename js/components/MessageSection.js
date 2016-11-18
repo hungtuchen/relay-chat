@@ -56,7 +56,7 @@ export default Relay.createContainer(MessageSection, {
     thread: () => Relay.QL`
       fragment on Thread {
         name
-        messages(first: 9007199254740991) {
+        messages(first: 2147483647) {
           edges {
             node {
               id,

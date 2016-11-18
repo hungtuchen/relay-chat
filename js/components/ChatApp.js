@@ -60,7 +60,7 @@ export default Relay.createContainer(ChatApp, {
     // 如果你要 query 任何 edges 裡的東西, 所以我們這裡假定一個很大的數
     viewer: () => Relay.QL`
       fragment on User {
-        threads(first: 9007199254740991) {
+        threads(first: 2147483647) {
           edges {
             node {
               id,

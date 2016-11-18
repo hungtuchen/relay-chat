@@ -14,7 +14,7 @@ export default class AddMessageMutation extends Relay.Mutation {
     viewer: () => Relay.QL`
       fragment on User {
         id,
-        threads(first: 9007199254740991) {
+        threads(first: 2147483647) {
           unreadCount,
           edges {
             node {
@@ -38,7 +38,7 @@ export default class AddMessageMutation extends Relay.Mutation {
           lastUpdated
         },
         viewer {
-          threads(first: 9007199254740991) {
+          threads(first: 2147483647) {
             unreadCount,
             edges {
               node {
