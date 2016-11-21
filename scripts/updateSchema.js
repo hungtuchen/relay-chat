@@ -11,7 +11,7 @@ import { introspectionQuery } from 'graphql/utilities';
   if (result.errors) {
     console.error('ERROR: ', JSON.stringify(result.errors, null, 2));
   } else {
-    fs.writeFileAsync(
+    fs.writeFileSync(
       path.join(__dirname, '../data/schema.json'),
       JSON.stringify(result, null, 2)
     );
