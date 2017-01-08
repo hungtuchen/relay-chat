@@ -1,6 +1,6 @@
 # Relay Chat
 
-**I no longer maintain this project since it's a demonstration, you can fork you own and play with it**
+**I no longer maintain this project. Since it is a demonstration, you can still fork and play with it**
 
 ## Installation
 
