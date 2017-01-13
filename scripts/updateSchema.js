@@ -6,7 +6,7 @@ import { Schema } from '../data/schema';
 import { graphql } from 'graphql';
 import { introspectionQuery } from 'graphql/utilities';
 
-async () => {
+(async () => {
   var result = await (graphql(Schema, introspectionQuery));
   if (result.errors) {
     console.error('ERROR: ', JSON.stringify(result.errors, null, 2));
@@ -16,4 +16,5 @@ async () => {
       JSON.stringify(result, null, 2)
     );
   }
-}();
+})();
+

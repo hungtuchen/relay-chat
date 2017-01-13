@@ -30,7 +30,8 @@ module.exports = {
         loader: 'babel',
         exclude: /node_modules/,
         query: {
-          plugins: ['./build/babelRelayPlugin']
+          plugins: ['./build/babelRelayPlugin'],
+          presets: ['es2015', 'stage-0','react'],
         }
       }
     ]
